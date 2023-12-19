@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import './App.css';
+import './App.scss';
 import Form from "./components/form";
 import Weather from "./components/weather";
 import axios from "axios";
@@ -19,7 +19,6 @@ function App() {
 
         if (city) {
             const data = await axios.get(`https://api.tomorrow.io/v4/weather/forecast?location=${city}&apikey=${apiKey}`)
-            console.log(data);
             setWeather(prev => ({
                 ...prev,
                 location: data.data.location,
@@ -34,6 +33,7 @@ function App() {
                 getWeather={getWeather}
             />
             {weather.location && <Weather days={weather.days} location={weather.location}/>}
+            <Weather/>
         </div>
     );
 }

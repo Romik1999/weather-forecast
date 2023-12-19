@@ -1,0 +1,35 @@
+@font-face {
+  font-family: 'Gilroy';
+  src: url('../src/assets/fonts/Gilroy-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Gilroy';
+  src: url('../src/assets/fonts/Gilroy-Bold.ttf') format('truetype');
+  font-weight: bold;
+  font-style: normal;
+}
+
+body{
+  height: 100vh;
+  margin: 0;
+  background-image: url("../src/assets/img/background.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  font-family: 'Gilroy';
+  font-size: 16px;
+  line-height: 120%;
+}
+
+#root{
+  height: 100vh;
+}
+
+.App{
+  height: 100vh;
+  max-width: 1920px;
+  width: 100%;
+}

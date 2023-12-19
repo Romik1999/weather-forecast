@@ -1,0 +1,130 @@
+.weather {
+  max-height: 700px;
+  height: 100%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-sizing: border-box;
+}
+
+.top {
+  display: flex;
+  padding: 25px 35px;
+  justify-content: space-between;
+  column-gap: 15px;
+
+  &__info {
+    max-width: 400px;
+  }
+}
+
+.city {
+  display: flex;
+  flex-direction: column;
+  row-gap: 10px;
+  text-align: right;
+
+  &__city {
+    font-size: 22px;
+  }
+
+  &__coord {
+    display: flex;
+    align-content: center;
+    column-gap: 10px;
+  }
+
+  &__button {
+    background: transparent;
+    border-radius: 5px;
+    border: 1px solid black;
+    padding: 7.5px 15px;
+    font-size: 14px;
+    box-sizing: border-box;
+    transition: 0.2s;
+    cursor: pointer;
+
+    &:hover {
+      background: black;
+      color: white;
+    }
+  }
+}
+
+.days {
+  padding: 25px 35px;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.swiper {
+  overflow: visible;
+
+  & .card {
+    &__props {
+      text-align: center;
+    }
+
+    &__temp {
+      font-size: 18px;
+      color: white;
+      font-weight: bold;
+
+      &--night {
+        color: grey;
+      }
+    }
+  }
+}
+
+.swiper-button-prev {
+  z-index: 10;
+  left: -30px;
+}
+
+.swiper-button-next {
+  z-index: 10;
+  right: -30px;
+}
+
+.card {
+  border: 1px solid rgba(0, 0, 0, 0.48);
+  background: linear-gradient(168deg, rgba(255, 255, 255, 0.18) 0.15%, rgba(255, 255, 255, 0.04) 97.5%);
+  box-shadow: 0px 4px 24px -1px rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(20px);
+
+  display: flex;
+  flex-direction: column;
+  row-gap: 10px;
+  padding: 15px;
+  border-radius: 15px;
+  box-sizing: border-box;
+
+  &__day {
+    font-size: 24px;
+    color: white;
+    text-align: center;
+    font-weight: bold;
+  }
+
+  &__desc {
+    font-size: 18px;
+    color: white;
+    text-align: center;
+  }
+
+  &__icon {
+    height: 100px;
+    margin-bottom: 15px;
+  }
+
+  &__props {
+    font-size: 14px;
+    color: white;
+
+    & span {
+      display: block;
+    }
+  }
+}
