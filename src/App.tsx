@@ -7,23 +7,24 @@ import axios from "axios";
 function App() {
 
     const [weather, setWeather] = useState({
-        temp: undefined,
-        city: undefined,
-        country: undefined,
-        sunrise: undefined,
-        sunset: undefined,
-        error: undefined
+        location: undefined,
+        days: undefined
     })
 
-    const APIkey = 'ee62b70201ab148d1f6f10758537e0b3'
+    const apiKey = 'Rk51fuluAWBqqXDYuKzXh3F0DkYfuyWN';
 
     const getWeather = async (e: any) => {
         e.preventDefault()
         const city = e.target.elements.city.value
 
-        if (city){
-            const data = await axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${APIkey}&units=metric&lang=ru`)
-            console.log(data.data);
+        if (city) {
+            const data = await axios.get(`https://api.tomorrow.io/v4/weather/forecast?location=${city}&apikey=${apiKey}`)
+            console.log(data);
+            setWeather(prev => ({
+                ...prev,
+                location: data.data.location,
+                days: data.data.timelines.daily
+            }))
         }
     }
 
@@ -32,7 +33,7 @@ function App() {
             <Form
                 getWeather={getWeather}
             />
-            { weather.city && <Weather weather={weather}/>}
+            {weather.location && <Weather days={weather.days} location={weather.location}/>}
         </div>
     );
 }

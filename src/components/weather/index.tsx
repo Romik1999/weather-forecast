@@ -1,13 +1,12 @@
 import React from 'react';
 
 const Weather = (props: any) => {
-    const {weather} = props
-    console.log("weather: ", weather);
+    const {days, location} = props
+    console.log("days: ", days);
+    console.log("location: ", location);
     return (
         <div>
-            Компонент погоды в {weather.city}
-
-
+            Погода в {location.name}
         </div>
     );
 };
