@@ -8,30 +8,39 @@ function App() {
 
     const [weather, setWeather] = useState({
         location: undefined,
-        days: undefined
+        days: undefined,
+        now: undefined
     })
 
-    const apiKey = 'Rk51fuluAWBqqXDYuKzXh3F0DkYfuyWN';
+    const apiKey = 'uNWcPmpLDCobGaNH4IEboSBWB7zPinMM';
+    const language = '&language=ru&details=true&metric=true';
+    const apiUrl = 'http://dataservice.accuweather.com';
 
     const getWeather = async (e: any) => {
         e.preventDefault()
         const city = e.target.elements.city.value
 
         if (city) {
-            const data = await axios.get(`https://api.tomorrow.io/v4/weather/forecast?location=${city}&apikey=${apiKey}`)
-            console.log(data.data);
-            setWeather(prev => ({
-                ...prev,
-                location: data.data.location,
-                days: data.data.timelines.daily
-            }))
+            const location = await axios.get(`${apiUrl}/locations/v1/cities/search?apikey=${apiKey}&q=${city}${language}`)
+
+            if (location){
+                const days = await axios.get(`${apiUrl}/forecasts/v1/daily/5day/${location.data[0].Key}?apikey=${apiKey}${language}`)
+                const now = await axios.get(`${apiUrl}/forecasts/v1/hourly/1hour/${location.data[0].Key}?apikey=${apiKey}${language}`)
+
+                setWeather(prev => ({
+                    ...prev,
+                    location: location.data[0],
+                    days: days.data.DailyForecasts,
+                    now: now.data[0]
+                }))
+            }
         }
     }
 
     return (
         <div className="App">
             {!weather.location && <Form getWeather={getWeather}/>}
-            {weather.location && <Weather days={weather.days} location={weather.location}/>}
+            {weather.location && <Weather days={weather.days} location={weather.location} now={weather.now}/>}
         </div>
     );
 }
