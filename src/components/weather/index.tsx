@@ -7,9 +7,7 @@ import {Navigation} from 'swiper/modules';
 
 const Weather = (props: any) => {
     const {days, location, now} = props
-    console.log("days:", days);
-    console.log("location:", location);
-    console.log("now:", now);
+
     return (
         <div className="weather">
             <div className="top">
