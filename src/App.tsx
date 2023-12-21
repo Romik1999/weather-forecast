@@ -3,6 +3,7 @@ import './App.scss';
 import Form from "./components/form";
 import Weather from "./components/weather";
 import axios from "axios";
+import {apiKey, apiUrl, language} from "./common/consts";
 
 function App() {
 
@@ -11,10 +12,6 @@ function App() {
         days: undefined,
         now: undefined
     })
-
-    const apiKey = 'uNWcPmpLDCobGaNH4IEboSBWB7zPinMM';
-    const language = '&language=ru&details=true&metric=true';
-    const apiUrl = 'http://dataservice.accuweather.com';
 
     const getWeather = async (e: any) => {
         e.preventDefault()

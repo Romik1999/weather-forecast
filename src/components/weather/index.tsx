@@ -11,8 +11,8 @@ const Weather = (props: any) => {
     return (
         <div className="weather">
             <div className="top">
-                <div className="top__info">
-                    <div className="card">
+                <div className="top__cards">
+                    <div className="card card--now">
                         <div className="card__day">Сейчас</div>
                         <div className="card__desc">{now.RealFeelTemperature.Phrase}</div>
                         <img
@@ -25,6 +25,36 @@ const Weather = (props: any) => {
                             </div>
                             <div className="card__wind">
                                 Ветер: {now.Wind.Direction.Localized} {now.Wind.Speed.Value}&nbsp;.км/ч
+                            </div>
+                        </div>
+                    </div>
+                    <div className="card card--today">
+                        <div className="card__top">
+                            <div className="card__day">Сегодня {new Date(days[0].Date).toLocaleString("Ru", {weekday: "long", month: "long", day: "numeric"})}</div>
+                            <div className="card__desc">{days[0].Day.LongPhrase}</div>
+                        </div>
+                        <div className="card__forecasts">
+                            <div className="card__forecast">
+                                <div className="card__temp">
+                                    Днем: {Math.round(days[0].Temperature.Maximum.Value)} {days[0].Temperature.Maximum.Unit}
+                                </div>
+                                <img
+                                    src={`https://apidev.accuweather.com/developers/Media/Default/WeatherIcons/${days[0].Day.Icon < 10 ? `0${days[0].Day.Icon}` : days[0].Day.Icon}-s.png`}
+                                    alt={days[0].Day.IconPhrase}/>
+                                <div className="card__wind">
+                                    Ветер: {days[0].Day.Wind.Direction.Localized}, {days[0].Day.Wind.Speed.Value}&nbsp;.км/ч
+                                </div>
+                            </div>
+                            <div className="card__forecast">
+                                <div className="card__temp">
+                                    Ночью: {Math.round(days[0].Temperature.Minimum.Value)} {days[0].Temperature.Minimum.Unit}
+                                </div>
+                                <img
+                                    src={`https://developer.accuweather.com/sites/default/files/${days[0].Night.Icon < 10 ? `0${days[0].Night.Icon}` : days[0].Night.Icon}-s.png`}
+                                    alt={days[0].Night.IconPhrase}/>
+                                <div className="card__wind">
+                                    Ветер: {days[0].Night.Wind.Direction.Localized}, {days[0].Night.Wind.Speed.Value}&nbsp;.км/ч
+                                </div>
                             </div>
                         </div>
                     </div>
