@@ -5,8 +5,12 @@ import useCityCoordinates from "./hooks/useGetCity";
 
 function App() {
     const cityName = 'Самара';
+    const [coordinates, setCoordinates] = useState(null)
+    const {cities, loading, error} = useCityCoordinates(cityName);
 
-    const { cities, loading, error } = useCityCoordinates(cityName);
+    const onClickCity = ()=>{
+
+    }
 
     if (loading) {
         return <p>Loading...</p>;
