@@ -6,54 +6,54 @@ import './style.scss'
 import {Navigation} from 'swiper/modules';
 
 const Weather = (props: any) => {
-    const {days, location, now} = props
-
+    const {weatherData} = props
+    console.log("weatherData:", weatherData);
     return (
         <div className="weather">
             <div className="top">
                 <div className="top__cards">
                     <div className="card card--now">
                         <div className="card__day">Сейчас</div>
-                        <div className="card__desc">{now.RealFeelTemperature.Phrase}</div>
+                        <div className="card__desc">{weatherData.fact.condition}</div>
                         <img
-                            src={`https://apidev.accuweather.com/developers/Media/Default/WeatherIcons/${now.WeatherIcon < 10 ? `0${now.WeatherIcon}` : now.WeatherIcon}-s.png`}
-                            alt={now.IconPhrase}/>
+                            src={`https://yastatic.net/weather/i/icons/funky/dark/${weatherData.fact.icon}.svg`}
+                            alt={weatherData.fact.icon}/>
                         <div className="card__props">
                             <div className="card__temp">
-                                <span>За окном: {now.Temperature.Value} {now.Temperature.Unit}</span>
-                                <span>Ощущается: {now.RealFeelTemperature.Value} {now.RealFeelTemperature.Unit}</span>
+                                <span>За окном: {weatherData.fact.temp}</span>
+                                <span>Ощущается: {weatherData.fact.feels_like}</span>
                             </div>
                             <div className="card__wind">
-                                Ветер: {now.Wind.Direction.Localized} {now.Wind.Speed.Value}&nbsp;.км/ч
+                                Ветер: {weatherData.fact.wind_dir} {weatherData.fact.wind_speed}&nbsp;.км/ч
                             </div>
                         </div>
                     </div>
                     <div className="card card--today">
                         <div className="card__top">
-                            <div className="card__day">Сегодня {new Date(days[0].Date).toLocaleString("Ru", {weekday: "long", month: "long", day: "numeric"})}</div>
-                            <div className="card__desc">{days[0].Day.LongPhrase}</div>
+                            <div className="card__day"></div>
+                            <div className="card__desc">{weatherData.forecasts[0].parts.day.condition}</div>
                         </div>
                         <div className="card__forecasts">
                             <div className="card__forecast">
                                 <div className="card__temp">
-                                    Днем: {Math.round(days[0].Temperature.Maximum.Value)} {days[0].Temperature.Maximum.Unit}
+                                    Днем: {Math.round(weatherData.forecasts[0].parts.day.temp_max)}
                                 </div>
                                 <img
-                                    src={`https://apidev.accuweather.com/developers/Media/Default/WeatherIcons/${days[0].Day.Icon < 10 ? `0${days[0].Day.Icon}` : days[0].Day.Icon}-s.png`}
-                                    alt={days[0].Day.IconPhrase}/>
+                                    src={`https://yastatic.net/weather/i/icons/funky/dark/${weatherData.forecasts[0].parts.day.icon}.svg`}
+                                    alt={weatherData.forecasts[0].parts.day.icon}/>
                                 <div className="card__wind">
-                                    Ветер: {days[0].Day.Wind.Direction.Localized}, {days[0].Day.Wind.Speed.Value}&nbsp;.км/ч
+                                    Ветер: {weatherData.forecasts[0].parts.day.wind_dir}, {weatherData.forecasts[0].parts.day.wind_speed}&nbsp;.км/ч
                                 </div>
                             </div>
                             <div className="card__forecast">
                                 <div className="card__temp">
-                                    Ночью: {Math.round(days[0].Temperature.Minimum.Value)} {days[0].Temperature.Minimum.Unit}
+                                    Ночью: {Math.round(weatherData.forecasts[0].parts.night.temp_min)}
                                 </div>
                                 <img
-                                    src={`https://developer.accuweather.com/sites/default/files/${days[0].Night.Icon < 10 ? `0${days[0].Night.Icon}` : days[0].Night.Icon}-s.png`}
-                                    alt={days[0].Night.IconPhrase}/>
+                                    src={`https://yastatic.net/weather/i/icons/funky/dark/${weatherData.forecasts[0].parts.night.icon}.svg`}
+                                    alt={weatherData.forecasts[0].parts.night.icon}/>
                                 <div className="card__wind">
-                                    Ветер: {days[0].Night.Wind.Direction.Localized}, {days[0].Night.Wind.Speed.Value}&nbsp;.км/ч
+                                    Ветер: {weatherData.forecasts[0].parts.night.wind_dir}, {weatherData.forecasts[0].parts.night.wind_speed}&nbsp;.км/ч
                                 </div>
                             </div>
                         </div>
@@ -61,11 +61,11 @@ const Weather = (props: any) => {
                 </div>
                 <div className="top__city">
                     <div className="city">
-                        <div className="city__country">{location.Country.LocalizedName}</div>
-                        <div className="city__city">{location.LocalizedName}</div>
+                        <div className="city__country">{weatherData.geo_object.country.name}</div>
+                        <div className="city__city">{weatherData.geo_object.province.name}</div>
                         <div className="city__coord">
-                            <span>{location.GeoPosition.Latitude}</span>
-                            <span>{location.GeoPosition.Longitude}</span>
+                            <span>{weatherData.info.lat}</span>
+                            <span>{weatherData.info.lon}</span>
                         </div>
                         <button className="city__button">Изменить</button>
                     </div>
@@ -97,41 +97,41 @@ const Weather = (props: any) => {
                         },
                     }}
                 >
-                    {days.map((day: any) => {
-                        let currentDate = new Date(day.Date).toLocaleString("Ru", {
+                    {weatherData.forecasts.filter((forecast:any, index:number) => index > 0).map((day: any, index: number) => {
+                        let currentDate = new Date(day.date).toLocaleString("Ru", {
                             weekday: "long",
                             month: "long",
                             day: "numeric"
                         })
 
                         return (
-                            <SwiperSlide key={day.EpochDate}>
+                            <SwiperSlide key={index}>
                                 <div className="card">
                                     <div className="card__top">
                                         <div className="card__day">{currentDate}</div>
-                                        <div className="card__desc">{day.Day.LongPhrase}</div>
+                                        <div className="card__desc">{day.parts.day.condition}</div>
                                     </div>
                                     <div className="card__forecasts">
                                         <div className="card__forecast">
                                             <div className="card__temp">
-                                                Днем: {Math.round(day.Temperature.Maximum.Value)} {day.Temperature.Maximum.Unit}
+                                                Днем: {Math.round(day.parts.day.temp_max)}
                                             </div>
                                             <img
-                                                src={`https://apidev.accuweather.com/developers/Media/Default/WeatherIcons/${day.Day.Icon < 10 ? `0${day.Day.Icon}` : day.Day.Icon}-s.png`}
-                                                alt={day.Day.IconPhrase}/>
+                                                src={`https://yastatic.net/weather/i/icons/funky/dark/${day.parts.day.icon}.svg`}
+                                                alt={day.parts.day.icon}/>
                                             <div className="card__wind">
-                                                Ветер: {day.Day.Wind.Direction.Localized}, {day.Day.Wind.Speed.Value}&nbsp;.км/ч
+                                                Ветер: {day.parts.day.wind_dir}, {day.parts.day.wind_speed}&nbsp;.км/ч
                                             </div>
                                         </div>
                                         <div className="card__forecast">
                                             <div className="card__temp">
-                                                Ночью: {Math.round(day.Temperature.Minimum.Value)} {day.Temperature.Minimum.Unit}
+                                                Ночью: {Math.round(day.parts.night.temp_min)}
                                             </div>
                                             <img
-                                                src={`https://developer.accuweather.com/sites/default/files/${day.Night.Icon < 10 ? `0${day.Night.Icon}` : day.Night.Icon}-s.png`}
-                                                alt={day.Night.IconPhrase}/>
+                                                src={`https://yastatic.net/weather/i/icons/funky/dark/${day.parts.night.icon}.svg`}
+                                                alt={day.parts.night.icon}/>
                                             <div className="card__wind">
-                                                Ветер: {day.Night.Wind.Direction.Localized}, {day.Night.Wind.Speed.Value}&nbsp;.км/ч
+                                                Ветер: {day.parts.night.wind_dir}, {day.parts.night.wind_speed}&nbsp;.км/ч
                                             </div>
                                         </div>
                                     </div>

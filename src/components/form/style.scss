@@ -74,10 +74,8 @@
   top: calc(100% + 10px);
   left: 0;
   z-index: 11;
-  padding: 5px 15px;
   border-radius: 10px;
   box-sizing: border-box;
-  border: 1px solid transparent;
   font-size: 18px;
   transition: 0.2s;
   cursor: pointer;
@@ -85,11 +83,18 @@
   background: white;
   display: flex;
   flex-direction: column;
+  overflow: hidden;
 
   &__item {
-    padding: 5px 0;
-    &:not(:last-child){
+    padding: 5px 10px;
+    transition: 0.2s;
+
+    &:not(:last-child) {
       border-bottom: 1px solid black;
+    }
+
+    &:hover{
+      background: grey;
     }
   }
 }

@@ -2,15 +2,21 @@ import React, {useState} from 'react';
 import './App.scss';
 import Form from "./components/form";
 import useCityCoordinates from "./hooks/useGetCity";
+import useWeather from "./hooks/useWeather";
+import Weather from "./components/weather";
 
+interface ICoordinates {
+    lat: string,
+    lon: string
+}
 function App() {
-    const cityName = 'Самара';
-    const [coordinates, setCoordinates] = useState(null)
-    const {cities, loading, error} = useCityCoordinates(cityName);
-
-    const onClickCity = ()=>{
-
-    }
+    const [city, setCity] = useState('');
+    const [coordinates, setCoordinates] = useState<ICoordinates>({
+        lat: '',
+        lon: ''
+    })
+    const {cities, loading, error} = useCityCoordinates(city);
+    const {weatherData, weatherLoading, weatherError} = useWeather(coordinates.lat, coordinates.lon)
 
     if (loading) {
         return <p>Loading...</p>;
@@ -18,8 +24,8 @@ function App() {
 
     return (
         <div className="App">
-            <Form cities={cities}/>
-            {/*{weather.location && <Weather days={weather.days} location={weather.location} now={weather.now}/>}*/}
+            {!weatherData && <Form setCity={setCity} setCoordinates={setCoordinates} cities={cities}/>}
+            {weatherData && <Weather weatherData={weatherData}/>}
         </div>
     );
 }

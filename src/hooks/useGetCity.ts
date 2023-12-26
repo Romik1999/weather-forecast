@@ -1,13 +1,16 @@
 import { useState, useEffect } from 'react';
 import axios from "axios";
 
-interface Coordinates {
+interface ICities {
     pointName: string,
     pointDescription: string,
-    pointCoordination: string,
+    pointCoordination: {
+        lat: string,
+        lon: string
+    }
 }
 const useCityCoordinates = (city:string) => {
-    const [cities, setCities] = useState<Coordinates | null>(null);
+    const [cities, setCities] = useState<ICities | null>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
@@ -19,7 +22,10 @@ const useCityCoordinates = (city:string) => {
                     return {
                         pointName: point.GeoObject.name,
                         pointDescription: point.GeoObject.description,
-                        pointCoordination: point.GeoObject.Point.pos
+                        pointCoordination: {
+                            lat: point.GeoObject.Point.pos.split(' ')[1],
+                            lon: point.GeoObject.Point.pos.split(' ')[0]
+                        }
                     }
                 })
                 setLoading(false);
@@ -30,8 +36,9 @@ const useCityCoordinates = (city:string) => {
                 console.error('Error fetching coordinates:', error);
             }
         };
-
-        getCoordinatesByCity();
+        if (city !== null || city !== "") {
+            getCoordinatesByCity();
+        }
     }, [city]);
 
     return { cities, loading, error };

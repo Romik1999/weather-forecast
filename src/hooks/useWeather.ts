@@ -1,34 +1,33 @@
 import { useState, useEffect } from 'react';
 
-const useWeather = (latitude:number, longitude:number) => {
+const useWeather = (latitude:string, longitude:string) => {
     const [weatherData, setWeatherData] = useState(null);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
+    const [weatherLoading, setWeatherLoading] = useState(true);
+    const [weatherError, setWeatherError] = useState(null);
 
     useEffect(() => {
         const fetchWeatherData = async () => {
             try {
-                const response = await fetch(`/api/weather?lat=${latitude}&lon=${longitude}`);
-
+                const response = await fetch(`/api/weather?lat=${latitude}&lon=${longitude}&lang=ru&hours=false&extra=true`);
                 if (!response.ok) {
                     throw new Error('Failed to fetch weather data');
                 }
 
                 const data = await response.json();
                 setWeatherData(data);
-                setLoading(false);
+                setWeatherLoading(false);
             } catch (error:any) {
-                setError(error);
-                setLoading(false);
+                setWeatherError(error);
+                setWeatherLoading(false);
             }
         };
 
-        if (latitude !== null && longitude !== null) {
+        if (latitude !== '' && longitude !== '') {
             fetchWeatherData();
         }
     }, [latitude, longitude]);
 
-    return { weatherData, loading, error };
+    return { weatherData, weatherLoading, weatherError };
 };
 
 export default useWeather;

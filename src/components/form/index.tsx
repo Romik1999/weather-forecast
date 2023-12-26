@@ -2,9 +2,8 @@ import React from 'react';
 import './style.scss'
 
 const Form = (props: any) => {
-    const {cities} = props
+    const {cities, setCity, setCoordinates} = props
 
-    console.log("cities: ", cities);
     return (
         <div className="wrapper">
             <div className="inner">
@@ -15,14 +14,19 @@ const Form = (props: any) => {
                             name="city"
                             placeholder="город"
                             className="form__input"
-                            onClick={() => {
-
-                            }}
+                            onChange={(e) => setCity(e.target.value)}
                         />
                         {cities && <div className="tooltip">
                             {cities.map((city: any, index: number) =>
                                 <div className="tooltip__item"
-                                     key={index}>{city.pointName} ({city.pointDescription})</div>
+                                     key={index}
+                                     onClick={() => setCoordinates({
+                                         lat: city.pointCoordination.lat,
+                                         lon: city.pointCoordination.lon
+                                     })}
+                                >
+                                    {city.pointName} ({city.pointDescription})
+                                </div>
                             )}
                         </div>}
                     </div>
