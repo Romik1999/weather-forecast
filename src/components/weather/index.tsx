@@ -6,7 +6,7 @@ import './style.scss'
 import {Navigation} from 'swiper/modules';
 import {condition} from "../../common/consts";
 
-const Weather = (props: any) => {
+const WeatherComponent = (props: any) => {
     const {weatherData} = props
     console.log("weatherData:", weatherData);
     return (
@@ -147,4 +147,4 @@ const Weather = (props: any) => {
     );
 };
 
-export default Weather;
+export default WeatherComponent;
