@@ -4,6 +4,7 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import './style.scss'
 import {Navigation} from 'swiper/modules';
+import {condition} from "../../common/consts";
 
 const Weather = (props: any) => {
     const {weatherData} = props
@@ -109,7 +110,7 @@ const Weather = (props: any) => {
                                 <div className="card">
                                     <div className="card__top">
                                         <div className="card__day">{currentDate}</div>
-                                        <div className="card__desc">{day.parts.day.condition}</div>
+                                        <div className="card__desc">{condition[day.parts.day.condition as keyof typeof condition]}</div>
                                     </div>
                                     <div className="card__forecasts">
                                         <div className="card__forecast">

@@ -84,6 +84,11 @@
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  max-height: 400px;
+
+  &__inner {
+    overflow: auto;
+  }
 
   &__item {
     padding: 5px 10px;
@@ -93,8 +98,13 @@
       border-bottom: 1px solid black;
     }
 
-    &:hover{
+    &:hover {
       background: grey;
     }
+  }
+
+  &__loading,
+  &__empty {
+    padding: 5px 10px;
   }
 }

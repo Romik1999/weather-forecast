@@ -11,12 +11,13 @@ interface ICities {
 }
 const useCityCoordinates = (city:string) => {
     const [cities, setCities] = useState<ICities | null>(null);
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
 
     useEffect(() => {
         const getCoordinatesByCity = async () => {
             try {
+                setLoading(true);
                 const response = await axios.get(`https://geocode-maps.yandex.ru/1.x/?apikey=1d446078-2496-459f-9aaa-dd5bb7c88767&geocode=${city}&format=json`);
                 const points = response.data.response.GeoObjectCollection.featureMember.map(function (point:any) {
                     return {
@@ -36,7 +37,7 @@ const useCityCoordinates = (city:string) => {
                 console.error('Error fetching coordinates:', error);
             }
         };
-        if (city !== null || city !== "") {
+        if (city.length !== 0) {
             getCoordinatesByCity();
         }
     }, [city]);

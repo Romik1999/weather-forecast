@@ -15,16 +15,20 @@ function App() {
         lat: '',
         lon: ''
     })
+    const [coordinatesToSearch, setCoordinatesToSearch] = useState<ICoordinates>({
+        lat: '',
+        lon: ''
+    })
     const {cities, loading, error} = useCityCoordinates(city);
-    const {weatherData, weatherLoading, weatherError} = useWeather(coordinates.lat, coordinates.lon)
+    const {weatherData, weatherLoading, weatherError} = useWeather(coordinatesToSearch.lat, coordinatesToSearch.lon)
 
-    if (loading) {
-        return <p>Loading...</p>;
+    const onSearch = ()=>{
+        setCoordinatesToSearch(coordinates)
     }
 
     return (
         <div className="App">
-            {!weatherData && <Form setCity={setCity} setCoordinates={setCoordinates} cities={cities}/>}
+            {!weatherData && <Form onSearch={onSearch} setCity={setCity} loading={loading} setCoordinates={setCoordinates} cities={cities}/>}
             {weatherData && <Weather weatherData={weatherData}/>}
         </div>
     );
