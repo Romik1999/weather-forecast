@@ -1,11 +1,12 @@
 import React from 'react';
 import './App.scss';
-import Router from "./router";
+import router from "./router";
+import {RouterProvider} from "react-router-dom";
 
 function App() {
     return (
         <div className="App">
-            <Router/>
+            <RouterProvider router={router} />
         </div>
     );
 }
