@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import './style.scss'
 
 const Form = (props: any) => {
-    const {cities, setCity, setCoordinates, loading, onSearch} = props
+    const {cities, setCity, city, setCoordinates, loading, onSearch} = props
     const [open, setOpen] = useState(false)
     const showCities = !loading && cities && cities.length > 0;
     const showLoading = !showCities && loading
@@ -22,16 +22,22 @@ const Form = (props: any) => {
                             className="form__input"
                             onChange={(e) => setCity(e.target.value)}
                             onClick={() => setOpen(prev => !prev)}
+                            value={city}
                         />
                         {open && <div className="tooltip">
                             <div className="tooltip__inner">
                                 {showCities && <>{cities.map((city: any, index: number) =>
                                     <div className="tooltip__item"
                                          key={index}
-                                         onClick={() => setCoordinates({
-                                             lat: city.pointCoordination.lat,
-                                             lon: city.pointCoordination.lon
-                                         })}
+                                         onClick={() => {
+                                             setCoordinates({
+                                                 lat: city.pointCoordination.lat,
+                                                 lon: city.pointCoordination.lon
+                                             })
+                                             setCity(city.pointName)
+                                             setOpen(false)
+                                         }
+                                         }
                                     >
                                         {city.pointName} ({city.pointDescription})
                                     </div>

@@ -10,7 +10,7 @@ interface ICities {
     }
 }
 const useCityCoordinates = (city:string) => {
-    const [cities, setCities] = useState<ICities | null>(null);
+    const [cities, setCities] = useState<any | null>(null);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
 
@@ -19,10 +19,12 @@ const useCityCoordinates = (city:string) => {
             try {
                 setLoading(true);
                 const response = await axios.get(`https://geocode-maps.yandex.ru/1.x/?apikey=1d446078-2496-459f-9aaa-dd5bb7c88767&geocode=${city}&format=json`);
+                console.log("response: ", response);
                 const points = response.data.response.GeoObjectCollection.featureMember.map(function (point:any) {
                     return {
                         pointName: point.GeoObject.name,
                         pointDescription: point.GeoObject.description,
+                        pointSlug: point.GeoObject.description,
                         pointCoordination: {
                             lat: point.GeoObject.Point.pos.split(' ')[1],
                             lon: point.GeoObject.Point.pos.split(' ')[0]
